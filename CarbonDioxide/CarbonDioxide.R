@@ -41,7 +41,7 @@ library(ggplot2)
 
 options(scipen=10000)
 
-setwd("~/Documents/Data Analytics/Rstudio")
+setwd("~/Documents/Data Analytics/DataR/CarbonDioxide")
 noaa_data <- read.csv("carbon_dioxide_levels.csv")
 View(noaa_data)
 
