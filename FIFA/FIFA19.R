@@ -6,6 +6,7 @@ library(rlang)
 library(ggpubr)
 library(rstatix)
 library(reshape2)
+library(e1071)
 
 # load ad clicks data
 setwd("~/Documents/Data Analytics/DataR/FIFA")
@@ -95,7 +96,7 @@ View(vector)
 #through > 0.95 and ≤ 1.00. Let’s graph that and see what we get for each sample size:
 
 viz4 <- ggplot(vector, aes(x = value)) + 
-  geom_histogram(binwidth = 1/50, , alpha = 0.5, color="white", fill=rainbow(204)) + 
+  geom_histogram(binwidth = 1/50, alpha = 0.5, color="white", fill=rainbow(204)) + 
   facet_grid(facets=variable ~ ., scales="free_y") + 
   #xlim(0,1) +
   labs(title="Running Normality Tests with Shapiro-Wilk", subtitle="Variable: Overall", 
@@ -106,7 +107,12 @@ viz4 <- ggplot(vector, aes(x = value)) +
 
 viz4
 
-ggplot(NULL, aes(x=x, colour = distribution)) + 
-  stat_function(fun=dnorm, data = data.frame(x = c(-6,6), distribution = factor(1))) + 
-  stat_function(fun=dt, args = list( df = 20), data = data.frame(x = c(-6,6), distribution = factor(2)), linetype = "dashed") + 
-  scale_colour_manual(values = c("blue","red"), labels = c("Normal","T-Distribution"))
+#Checking the tails
+summary(Overall)
+skewness(Overall)
+kurtosis(Overall) 
+
+#the value of kurtosis is negative so overall is platykurtic
+#probably because some outliers are present
+
+
